@@ -7,7 +7,6 @@ require('source-map-support').install();
  */
 
 var app = require('../app/app');
-var debug = require('debug')('EatNow:server');
 var http = require('http');
 
 /**
@@ -96,5 +95,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  //console.debug('Listening on ' + bind);
 }
