@@ -1,0 +1,14 @@
+{
+  "dbname": "eatnow",
+  "username": "admin",
+  "password": "admin",
+  "params": {
+    "dialect": "sqlite",
+    "storage": "./eatnow.sqlite3",
+    "define": {
+      "underscored": true,
+      "freezeTableName": true,
+      "charset": "utf8"
+    }
+  }
+}
