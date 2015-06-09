@@ -22,48 +22,24 @@ init = (squlize) ->
       fields; ['cname']
     ]
 
-    create = (restaurant, cb) ->
+  create = (restaurant, cb) ->
   model.create
-    cname: meal.cname
+    cname: restaurant.cname
+    place: restaurant.place
+    img: restaurant.img
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (restaurant, cb) ->
-  model.create
-    place: meal.place
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (restaurant,cb) ->
-  model.create
-    img: meal.img
-  .then (data) ->
-    cb null,data
-  , (err) ->
-    cb err
-
-find = (cname, cb) ->
+find = (id, cb) ->
   model.find
     where:
-      cname: cname
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
-
-find = (place, cb) ->
-  model.find
-    where:
-      place: place
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
 
 findAll = (cb) ->
   model.find
@@ -72,43 +48,30 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update =(cname,cb) ->
+update =(restaurant,cb) ->
   model.update
-    cname: meal.cname
+    cname: restaurant.cname
+    place: restaurant.place
+    img: restaurant.img
     where:
-      cname: meal.cname
+      cname: restaurant.cname
+      place: restaurant.place
+      img: restaurant.img
   .then (data) ->
     cb null, data
   ,(err) ->
     cb err
 
-update =(place,cb) ->
-  model.update
-    place: meal.place
-    where:
-      place: meal.place
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-destory =(cname) ->
+destory =(restaurant) ->
   model.destory
     where:
-      cname: meal.cname
+      id: restaurant.id
+      cname: restaurant.cname
+      place: restaurant.place
+      img: restaurant.img
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
-
-destory =(place) ->
-  model.destory
-  where:
-    place: meal.place
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
 
 module.exports = { init, create, find, findAll , update , destory}

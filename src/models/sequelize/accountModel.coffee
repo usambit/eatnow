@@ -12,6 +12,9 @@ init = (squlize) ->
   sid:
       type: sequelize.STRING
       allownull:no
+  pw:
+      type: sequelize.STRING
+      allownull:no
   cname:
       type: Sequelize.STRING
       allowNull: no
@@ -27,72 +30,24 @@ init = (squlize) ->
 
 create = (account, cb) ->
   model.create
-    sid: meal.sid
+    sid: account.sid
+    pw: account.pw
+    cname: account.cname
+    phone: account.phone
+    email: account.email
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (account, cb) ->
-  model.create
-    cname: meal.cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (account, cb) ->
-  model.create
-    phone: meal.phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (account,cb) ->
-  model.create
-    email: meal.email
-  .then (data) ->
-    cb null,data
-  , (err) ->
-    cb err
-
-find = (sid, cb) ->
+find = (account, cb) ->
   model.find
     where:
-      sid: sid
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
-
-find = (cname, cb) ->
-  model.find
-    where:
-      cname: cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (phone, cb) ->
-  model.find
-    where:
-      phone: phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (email, cb) ->
-  model.find
-    where:
-      email: email
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
 
 findAll = (cb) ->
   model.find
@@ -101,41 +56,19 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update =(sid,cb) ->
+update =(account,cb) ->
   model.update
-    sid: meal.sid
+    sid: account.sid
+    pw: account.pw
+    cname: account.cname
+    phone: account.phone
+    email: account.email
     where:
-      sid: meal.sid
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(cname,cb) ->
-  model.update
-    cname: meal.cname
-    where:
-      cname: meal.cname
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(phone,cb) ->
-  model.update
-    phone: meal.phone
-    where:
-      phone: meal.phone
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(email,cb) ->
-  model.update
-    email: meal.email
-    where:
-      email: meal.email
+      sid: account.sid
+      pw: account.pw
+      cname: account.cname
+      phone: account.phone
+      email: account.email
   .then (data) ->
     cb null, data
   ,(err) ->

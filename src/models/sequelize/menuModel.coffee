@@ -26,24 +26,10 @@ init = (sequelize) ->
 create = (meal, cb) ->
   model.create
     cname: meal.cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (meal, cb) ->
-  model.create
     price: meal.price
+    restaurant.id: meal.restaurantId
   .then (data) ->
     cb null, data
-  , (err) ->
-    cb err
-
-create = (meal,cb) ->
-  model.create
-    restaurantId: meal.restaurantId
-  .then (data) ->
-    cb null,data
   , (err) ->
     cb err
 
@@ -51,24 +37,6 @@ find = (id, cb) ->
   model.find
     where:
       id: id
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (price, cb) ->
-  model.find
-    where:
-      price: price
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (restaurantId, cb) ->
-  model.find
-    where:
-      restaurantId: restaurantId
   .then (data) ->
     cb null, data
   , (err) ->
@@ -84,36 +52,22 @@ findAll = (cb) ->
 update =(cname,cb) ->
   model.update
     cname:meal.cname
-    where:
-      cname: meal.cname
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(price,cb) ->
-  model.update
     price:meal.price
     where:
+      cname: meal.cname
       price: meal.price
   .then (data) ->
     cb null, data
   ,(err) ->
     cb err
 
-destory =(cname) ->
+destory =(meal) ->
   model.destory
     where:
+      id: meal.id
       cname: meal.cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-destory =(price) ->
-  model.destory
-  where:
-    price: meal.price
+      price: meal.price
+      restaurantId: meal.restaurantId
   .then (data) ->
     cb null, data
   , (err) ->

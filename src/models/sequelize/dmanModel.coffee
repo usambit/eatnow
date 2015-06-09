@@ -22,33 +22,17 @@ init = (sequelize) ->
 
 create = (dman, cb) ->
   model.create
-    cname: meal.cname
+    cname: dman.cname
+    phone: dman.phone
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (dman, cb) ->
-  model.create
-    phone: meal.phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (cname, cb) ->
+find = (id, cb) ->
   model.find
     where:
-      cname: cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (phone, cb) ->
-  model.find
-    where:
-      phone: phone
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
@@ -61,9 +45,10 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update =(cname,cb) ->
+update =(dman,cb) ->
   model.update
-    cname:meal.cname
+    cname: dman.cname
+    phone: dman.phone
     where:
       cname: meal.cname
   .then (data) ->
@@ -71,33 +56,14 @@ update =(cname,cb) ->
   ,(err) ->
     cb err
 
-update =(phone,cb) ->
-  model.update
-    price:meal.price
-    where:
-      price: dman.price
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-destory =(cname) ->
+destory =(dman) ->
   model.destory
     where:
       cname: dman.cname
+      phone: dman.phone
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
-
-destory =(phone) ->
-  model.destory
-  where:
-    phone: dman.phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
 
 module.exports = { init, create, find, findAll , update , destory}

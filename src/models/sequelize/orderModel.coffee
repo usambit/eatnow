@@ -33,92 +33,21 @@ init = (sequelize) ->
 
 create = (order, cb) ->
   model.create
-    sid: order.sid
+    account.sid: order.sid
+    account.cname: order.cname
+    account.phone: order.phone
+    restaurant.cname: order.restName
+    meal.cname: order.mealName
+    totalprice: totalprice
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (order, cb) ->
-  model.create
-    cname: order.cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (order, cb) ->
-  model.create
-    phone: order.phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (order, cb) ->
-  model.create
-    restName: order.restName
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (order, cb) ->
-  model.create
-    mealName: order.mealName
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-create = (order, cb) ->
-  model.create
-    totalprice: order.totalprice
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (sid, cb) ->
+find = (id, cb) ->
   model.find
     where:
-      sid: sid
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (cname, cb) ->
-  model.find
-    where:
-      cname: cname
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (phone, cb) ->
-  model.find
-    where:
-      phone: phone
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (restName, cb) ->
-  model.find
-    where:
-      restName: restName
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (mealName, cb) ->
-  model.find
-    where:
-      mealName: mealName
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
@@ -131,54 +60,25 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update =(sid,cb) ->
+update =(order,cb) ->
   model.update
-    sid: meal.sid
+    sid: order.sid
+    cname: order.cname
+    price: order.price
+    restName: order.restName
+    mealName: order.mealName
+    totalprice: order.totalprice
     where:
-      sid: order.sid
+    sid: order.sid
+    cname: order.cname
+    price: order.price
+    restName: order.restName
+    mealName: order.mealName
+    totalprice: order.totalprice
   .then (data) ->
     cb null, data
   ,(err) ->
     cb err
 
-update =(cname,cb) ->
-  model.update
-    cname: meal.cname
-    where:
-      cname: order.cname
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(phone,cb) ->
-  model.update
-    price: meal.price
-    where:
-      price: order.price
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(restName,cb) ->
-  model.update
-    cname: meal.restName
-    where:
-      restname: order.restName
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-update =(mealName,cb) ->
-  model.update
-    mealName: meal.mealName
-    where:
-      mealName: order.mealName
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
 
 module.exports = { init, create, find, findAll , update}
