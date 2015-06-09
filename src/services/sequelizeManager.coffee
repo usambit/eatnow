@@ -8,16 +8,16 @@ init = (cb) ->
     conf.password
     conf.params
 
-  # for mname, model of models
-  #   model.init sequelize
+  for mname, model of models
+    model.init sequelize
 
-  restaurant = models.restaurant.init sequelize
-  meal = models.meal.init sequelize
+  # restaurant = models.restaurant.init sequelize
+  # meal = models.meal.init sequelize
 
-  restaurant.hasMany meal #, onDelete: 'cascade', hooks:true
-  meal.belongsTo restaurant, as: 'Menu', foreignKey: 'restaurant_id'
+  # restaurant.hasMany meal #, onDelete: 'cascade', hooks:true
+  # meal.belongsTo restaurant, as: 'Menu', foreignKey: 'restaurant_id'
 
-  sequelize.sync({force: true})
+  sequelize.sync()
   .then ->
     # setTimeout ->
     #   restaurant.create
@@ -35,6 +35,12 @@ init = (cb) ->
     #       m1.save()
     #       m2.save()
     # , 500
+    # models.restaurant.find '1', (err, data)->
+    #   console.log
+    #     id: data.id
+    #     cname: data.cname
+    #     place: data.place
+    #     img: data.img
 
     cb()
   , (err) ->

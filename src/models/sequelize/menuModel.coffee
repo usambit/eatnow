@@ -18,7 +18,8 @@ init = (sequelize) ->
     restaurantId:
       type: Sequelize.UUID
       allowNull: no
-  , indexes: [
+  ,
+    indexes: [
       fields: ['cname']
     ]
 
@@ -27,14 +28,40 @@ create = (meal, cb) ->
   model.create
     cname: meal.cname
     price: meal.price
-    restaurant.id: meal.restaurantId
+    restaurantId: meal.restaurantId
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
 find = (id, cb) ->
-  model.find
+  model.findById id
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+findByRid = (rid, cb) ->
+  model.findAll
+    where:
+      restaurantId: rid
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+findAll = (cb) ->
+  model.findAll()
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+update = (id, meal, cb) ->
+  model.update
+    cname: meal.cname
+    price: meal.price
+  ,
     where:
       id: id
   .then (data) ->
@@ -42,36 +69,14 @@ find = (id, cb) ->
   , (err) ->
     cb err
 
-findAll = (cb) ->
-  model.find
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-update =(cname,cb) ->
-  model.update
-    cname:meal.cname
-    price:meal.price
-    where:
-      cname: meal.cname
-      price: meal.price
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-destory =(meal) ->
+destory = (id) ->
   model.destory
     where:
-      id: meal.id
-      cname: meal.cname
-      price: meal.price
-      restaurantId: meal.restaurantId
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
 
-module.exports = { init, create, find, findAll , update , destory}
+module.exports = { init, create, find, findByRid, findAll , update , destory}

@@ -9,6 +9,6 @@ express = require 'express'
 router  = express.Router()
 
 router.use '/restaurants', require './restaurants'
-#router.use '/staff', require './staff'
+router.use '/dman', require './dman'
 
 module.exports = router;

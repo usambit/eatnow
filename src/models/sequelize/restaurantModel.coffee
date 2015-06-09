@@ -1,28 +1,29 @@
-Sequelize =  require 'sequlize'
+Sequelize = require 'sequelize'
 
 model = null
 
-init = (squlize) ->
+init = (sequelize) ->
   model = sequelize.define 'restaurants',
   id:
-      primaryKey: yes
-      type: Sequelize.UUID
-      defaultValue: Sequelize.UUIDV1
-      allowNull: no
+    primaryKey: yes
+    type: Sequelize.UUID
+    defaultValue: Sequelize.UUIDV1
+    allowNull: no
   cname:
-      type: Sequelize.STRING
-      allowNull: no
+    type: Sequelize.STRING
+    allowNull: no
   place:
-      type: sequelize.STRING
-      allownull: no
-  img:
-    type: sequelize.STRING
+    type: Sequelize.STRING
     allownull: no
-  , index: [
-      fields; ['cname']
+  img:
+    type: Sequelize.STRING
+    allownull: no
+  ,
+    index: [
+      fields: ['cname']
     ]
 
-  create = (restaurant, cb) ->
+create = (restaurant, cb) ->
   model.create
     cname: restaurant.cname
     place: restaurant.place
@@ -33,7 +34,25 @@ init = (squlize) ->
     cb err
 
 find = (id, cb) ->
-  model.find
+  model.findById id
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+findAll = (cb) ->
+  model.findAll()
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+update = (id, restaurant, cb) ->
+  model.update
+    cname: restaurant.cname
+    place: restaurant.place
+    img: restaurant.img
+  ,
     where:
       id: id
   .then (data) ->
@@ -41,37 +60,13 @@ find = (id, cb) ->
   , (err) ->
     cb err
 
-findAll = (cb) ->
-  model.find
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-update =(restaurant,cb) ->
-  model.update
-    cname: restaurant.cname
-    place: restaurant.place
-    img: restaurant.img
-    where:
-      cname: restaurant.cname
-      place: restaurant.place
-      img: restaurant.img
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-destory =(restaurant) ->
+destory = (id) ->
   model.destory
     where:
-      id: restaurant.id
-      cname: restaurant.cname
-      place: restaurant.place
-      img: restaurant.img
+      id: id
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-module.exports = { init, create, find, findAll , update , destory}
+module.exports = { init, create, find, findAll, update, destory }

@@ -6,6 +6,7 @@ ui
 
 express = require 'express'
 router  = express.Router()
+restService = require '../services/restaurantService'
 
 # restaurants and assign button
 router.get '/', (req, res) ->
@@ -17,28 +18,39 @@ router.get '/login', (req, res) ->
 
 # list and menu
 router.get '/restaurants', (req, res) ->
-  res.render 'adminRest',
-    data: [
-      id: '1'
-      cname: 'R1'
-      menu: [
-        name: 'F1'
-        price: 20
-      ,
-        name: 'F2'
-        price: 26
-      ]
-    ,
-      id: '2'
-      cname: 'R2'
-      menu: [
-        name: 'F3'
-        price: 23
-      ,
-        name: 'F4'
-        price: 25
-      ]
-    ]
+  cb = (err, data) ->
+    if err
+      next err
+    else
+      res.render 'adminRest',
+        data: data
+
+  restService.getList cb
+
+    #   [
+    #   id: '1'
+    #   cname: 'R1'
+    #   place: '...'
+    #   img: '..//'
+    #   menu: [
+    #     id: 1
+    #     cname: 'F1'
+    #     price: 20
+    #   ,
+    #     name: 'F2'
+    #     price: 26
+    #   ]
+    # ,
+    #   id: '2'
+    #   cname: 'R2'
+    #   menu: [
+    #     name: 'F3'
+    #     price: 23
+    #   ,
+    #     name: 'F4'
+    #     price: 25
+    #   ]
+    #]
 
 # assign button
 # router.get '/assign', (req, res) ->
@@ -54,7 +66,8 @@ router.get '/assign/report', (req, res) ->
         rooms: [
           name: 'R1'
           menu: [
-            name: 'F1'
+            id: 1
+            cname: 'F1'
             q: 3
           ,
             name: 'F2'
