@@ -3,7 +3,7 @@ Sequelize = require 'sequelize'
 model = null
 
 init = (sequelize) ->
-  model = sequelize.define 'meals',
+  model = sequelize.define 'dmans',
     id:
       primaryKey: yes
       type: Sequelize.UUID
@@ -12,18 +12,15 @@ init = (sequelize) ->
     cname:
       type: Sequelize.STRING
       allowNull: no
-    price:
-      type: Sequelize.INTEGER
-      allowNull: no
-    restaurantId:
-      type: Sequelize.UUID
+    phone:
+      type: Sequelize.STRING
       allowNull: no
   , indexes: [
       fields: ['cname']
     ]
 
 
-create = (meal, cb) ->
+create = (dman, cb) ->
   model.create
     cname: meal.cname
   .then (data) ->
@@ -31,44 +28,27 @@ create = (meal, cb) ->
   , (err) ->
     cb err
 
-create = (meal, cb) ->
+create = (dman, cb) ->
   model.create
-    price: meal.price
+    phone: meal.phone
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (meal,cb) ->
-  model.create
-    restaurantId: meal.restaurantId
-  .then (data) ->
-    cb null,data
-  , (err) ->
-    cb err
-
-find = (id, cb) ->
+find = (cname, cb) ->
   model.find
     where:
-      id: id
+      cname: cname
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-find = (price, cb) ->
+find = (phone, cb) ->
   model.find
     where:
-      price: price
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-find = (restaurantId, cb) ->
-  model.find
-    where:
-      restaurantId: restaurantId
+      phone: phone
   .then (data) ->
     cb null, data
   , (err) ->
@@ -91,11 +71,11 @@ update =(cname,cb) ->
   ,(err) ->
     cb err
 
-update =(price,cb) ->
+update =(phone,cb) ->
   model.update
     price:meal.price
     where:
-      price: meal.price
+      price: dman.price
   .then (data) ->
     cb null, data
   ,(err) ->
@@ -104,16 +84,16 @@ update =(price,cb) ->
 destory =(cname) ->
   model.destory
     where:
-      cname: meal.cname
+      cname: dman.cname
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-destory =(price) ->
+destory =(phone) ->
   model.destory
   where:
-    price: meal.price
+    phone: dman.phone
   .then (data) ->
     cb null, data
   , (err) ->

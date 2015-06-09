@@ -3,26 +3,37 @@ Sequelize =  require 'sequlize'
 model = null
 
 init = (squlize) ->
-  model = sequelize.define 'restaurants',
+  model = sequelize.define 'accounts',
   id:
       primaryKey: yes
       type: Sequelize.UUID
       defaultValue: Sequelize.UUIDV1
       allowNull: no
+  sid:
+      type: sequelize.STRING
+      allownull:no
   cname:
       type: Sequelize.STRING
       allowNull: no
-  place:
+  phone:
       type: sequelize.STRING
       allownull: no
-  img:
+  email:
     type: sequelize.STRING
     allownull: no
   , index: [
-      fields; ['cname']
+      fields; ['sid']
     ]
 
-    create = (restaurant, cb) ->
+create = (account, cb) ->
+  model.create
+    sid: meal.sid
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+create = (account, cb) ->
   model.create
     cname: meal.cname
   .then (data) ->
@@ -30,19 +41,28 @@ init = (squlize) ->
   , (err) ->
     cb err
 
-create = (restaurant, cb) ->
+create = (account, cb) ->
   model.create
-    place: meal.place
+    phone: meal.phone
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-create = (restaurant,cb) ->
+create = (account,cb) ->
   model.create
-    img: meal.img
+    email: meal.email
   .then (data) ->
     cb null,data
+  , (err) ->
+    cb err
+
+find = (sid, cb) ->
+  model.find
+    where:
+      sid: sid
+  .then (data) ->
+    cb null, data
   , (err) ->
     cb err
 
@@ -55,10 +75,19 @@ find = (cname, cb) ->
   , (err) ->
     cb err
 
-find = (place, cb) ->
+find = (phone, cb) ->
   model.find
     where:
-      place: place
+      phone: phone
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+find = (email, cb) ->
+  model.find
+    where:
+      email: email
   .then (data) ->
     cb null, data
   , (err) ->
@@ -72,6 +101,16 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
+update =(sid,cb) ->
+  model.update
+    sid: meal.sid
+    where:
+      sid: meal.sid
+  .then (data) ->
+    cb null, data
+  ,(err) ->
+    cb err
+
 update =(cname,cb) ->
   model.update
     cname: meal.cname
@@ -82,33 +121,25 @@ update =(cname,cb) ->
   ,(err) ->
     cb err
 
-update =(place,cb) ->
+update =(phone,cb) ->
   model.update
-    place: meal.place
+    phone: meal.phone
     where:
-      place: meal.place
+      phone: meal.phone
   .then (data) ->
     cb null, data
   ,(err) ->
     cb err
 
-destory =(cname) ->
-  model.destory
+update =(email,cb) ->
+  model.update
+    email: meal.email
     where:
-      cname: meal.cname
+      email: meal.email
   .then (data) ->
     cb null, data
-  , (err) ->
-    cb err
-
-destory =(place) ->
-  model.destory
-  where:
-    place: meal.place
-  .then (data) ->
-    cb null, data
-  , (err) ->
+  ,(err) ->
     cb err
 
 
-module.exports = { init, create, find, findAll , update , destory}
+module.exports = { init, create, find, findAll , update}
