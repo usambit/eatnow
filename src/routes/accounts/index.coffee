@@ -12,9 +12,9 @@ post: create/ update/ delete the account info
 express = require 'express'
 router  = express.Router()
 
-router.use '/:sid/login', require './login'
-router.use '/:sid/logout', require './logout'
-router.use '/:sid/forgot', require './forgot'
+router.use '/login', require './login'
+router.use '/logout', require './logout'
+#router.use '/password/reset', require './reset'
 router.use '/:sid/orders', require './orders'
 
 router.route '/'

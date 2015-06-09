@@ -1,6 +1,116 @@
 extends layout
 
+-var data = #{data}
+
 block content
-  div RA
-    span RA
-    div Menu
+  header.eatnow
+    h1(style="display: inline-block;") 123 - Rest
+    h3#btnAddRest.headerIcon.glyphicon.glyphicon-plus
+  article.col-sm-10
+    - for(var i = 0; i< data.length; i++) {
+    section
+      h2(style="display: inline-block;")= data[i].cname
+      span(data-rid=data[i].id, data-cname=data[i].cname, data-img=data[i].img, data-place=data[i].place)#btnEditRest.headerIcon.glyphicon.glyphicon-pencil
+      span#btnRemoveRest.headerIcon.glyphicon.glyphicon-minus
+      table.table.table-bordered.table-hover
+        thead
+          tr
+            th
+            th name
+            th price
+        - for(var j = 0; j< data[i].menu.length; j++) {
+          tr
+            td
+              span#btnEditMenu.headerIcon.glyphicon.glyphicon-pencil
+              span#btnRemoveMenu.headerIcon.glyphicon.glyphicon-minus
+            td= data[i].menu[j].name
+            td= data[i].menu[j].price
+        - }
+      span#btnAddMenu.headerIcon.glyphicon.glyphicon-plus
+    - }
+
+
+
+  section#createMenuForm.adminLoginPanel.col-sm-12
+    button.login-close-panel(style="float: right;")
+      span#btnCloseMenuForm.glyphicon.glyphicon-remove-circle
+
+    header Menu
+
+    form.form-horizontal(role="form", method="post", action="")
+      input(type="hidden" name="method" value="")
+      input(type="hidden" name="restaurantId" value="")
+      div.form-group
+        label.col-sm-3.control-label(for="inputMName") name
+        div.col-sm-9
+          input#inputMName.form-control(type="text", name="cname", placeholder="name")
+      div.form-group
+        label.col-sm-3.control-label(for="inputPrice") price
+        div.col-sm-9
+          input#inputPrice.form-control(type="text", name="price", placeholder="price")
+      div.form-group
+        div.col-sm-offset-1.col-sm-11
+          button.btn.btn-primary.btn-block submit
+
+
+
+  section#createRestForm.adminLoginPanel.higher.col-sm-12
+    button.login-close-panel(style="float: right;")
+      span#btnCloseRestForm.glyphicon.glyphicon-remove-circle
+
+    header Rest
+
+    form.form-horizontal(role="form", method="post", action="/resources/restaurants")
+      input(type="hidden" name="method" value="")
+      div.form-group
+        label.col-sm-3.control-label(for="inputName") name
+        div.col-sm-9
+          input#inputName.form-control(type="text", name="cname", placeholder="name")
+      div.form-group
+        label.col-sm-3.control-label(for="inputImg") img
+        div.col-sm-9
+          input#inputImg.form-control(type="text", name="img", placeholder="image path")
+      div.form-group
+        label.col-sm-3.control-label(for="inputPlace") place
+        div.col-sm-9
+          input#inputPlace.form-control(type="text", name="place", placeholder="place")
+      div.form-group
+        div.col-sm-offset-1.col-sm-11
+          button.btn.btn-primary.btn-block submit
+
+  script.
+    $("#createMenuForm").hide();
+    $("#createRestForm").hide();
+
+    $('#btnAddRest').click(function(){
+      $("#createRestForm").find("form> input").val();
+      $("#createRestForm").find("form> input[name='method']").val('create');
+      $("#createRestForm").show();
+    });
+    $('#btnAddMenu').click(function(){
+      $("#createMenuForm").find("form> input").val();
+      $("#createMenuForm").find("form> input[name='method']").val('create');
+      $("#createMenuForm").show();
+    });
+
+    $('#btnCloseRestForm').click(function(){
+      $("#createRestForm").hide();
+    });
+    $('#btnCloseMenuForm').click(function(){
+      $("#createMenuForm").hide();
+    });
+
+
+    $('#btnEditRest').click(function(){
+      $("#createRestForm").find("form> input[name='method']").val('update');
+      $("#createRestForm").find("form> input[name='cname']").val('update');
+      $("#createRestForm").find("form> input[name='img']").val('update');
+      $("#createRestForm").find("form> input[name='place']").val('update');
+      $("#createRestForm").show();
+    });
+    $('#btnEditMenu').click(function(){
+      $("#createMenuForm").find("form> input[name='method']").val('update');
+      $("#createMenuForm").find("form> input[name='restaurantId']").val();
+      $("#createMenuForm").show();
+    });
+

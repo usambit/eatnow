@@ -12,7 +12,6 @@ paths =
   jsDest : './app/'
   startup: 'bin/startup'
 
-# new coffee file will error ?
 gulp.task 'watch', ['compile'], ->
   gulp.watch paths.scripts, ['compile']
 
@@ -25,7 +24,7 @@ gulp.task 'compile', ->
     .pipe sourcemaps.write includeContent: false, sourceRoot: '/src'
     .pipe gulp.dest paths.jsDest
 
-# if compile error?
+# if compile error? win will error?
 gulp.task 'supervisor', ->
   supervisor paths.startup
 

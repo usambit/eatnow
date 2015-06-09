@@ -1,10 +1,35 @@
 extends layout
 
+-var data = #{data}
+
 block content
-  table
-    tr
-      td 送貨員
-      td 便當
-    tr
-      td A
-      td AAA
+  header.eatnow
+    h1 EatNow - Report
+  article.col-sm-10
+    - for(var i = 0; i< data.length; i++) {
+    section
+      h2= data[i].time
+      table.table.table-bordered.table-hover
+        thead
+          tr
+            th dmans
+            th place
+            th menu
+            th q
+            th account
+            th price
+        - for(var j = 0; j< data[i].dmans.length; j++) {
+        - for(var k = 0; k< data[i].dmans[j].rooms.length; k++) {
+        - for(var l = 0; l< data[i].dmans[j].rooms[k].menu.length; l++) {
+          tr
+            td= data[i].dmans[j].name
+            td= data[i].dmans[j].rooms[k].name
+            td= data[i].dmans[j].rooms[k].menu[l].name
+            td= data[i].dmans[j].rooms[k].menu[l].q
+            td= data[i].dmans[j].rooms[k].account
+            td= data[i].dmans[j].rooms[k].price
+        - }
+        - }
+        - }
+    - }
+
