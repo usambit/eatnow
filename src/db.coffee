@@ -70,18 +70,18 @@ module.exports = (o) ->
 
 
 
-  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '豪享來', mealName: '紅油炒手',time: '12:30',totalprice: 40
-  order.create sid: 'M10309206', cname: '瑤瑤', phone: '0937364903', restName: '牛排館', mealName: '超大牛排',time: '12:45' , totalprice: 180
-  order.create sid: 'M10309211', cname: '金城武', phone: '0937364123', restName: '台灣古早味', mealName: '雞排飯',time: '12:45' , totalprice: 80
-  order.create sid: 'M10309209', cname: '安心亞', phone: '0937364902', restName: '豪享來', mealName: '牛肉湯麵',time: '12:45' , totalprice: 50
-  order.create sid: 'M10309210', cname: '范冰冰', phone: '0937543902', restName: '韓風小舖', mealName: '韓式拌飯',time: '12:45' , totalprice: 85
-  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '豪享來', mealName: '紅油炒手',time: '12:30' , totalprice: 40
-  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '吉之賀', mealName: '親子丼',time: '12:30' , totalprice: 70
-  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '七辣滷味', mealName: 'A套餐',time: '12:30' , totalprice: 50
-  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '安娜廚房', mealName: '蒜香義大利麵',time: '12:30' , totalprice: 55
-  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '吉之賀', mealName: '親子丼',time: '12:30' , totalprice: 70
-  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '四海遊龍', mealName: '酸辣麵',time: '12:30' , totalprice: 50
-  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '七辣滷味', mealName: 'B套餐',time: '12:30' , totalprice: 60
+  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '豪享來', mealName: '紅油炒手',time: '12:30' , quantity 1, buildName: 'T2', roomName:'101', totalprice: 40
+  order.create sid: 'M10309206', cname: '瑤瑤', phone: '0937364903', restName: '牛排館', mealName: '超大牛排',time: '12:45' , quantity 1, buildName: 'TR', roomName:'101', totalprice: 180
+  order.create sid: 'M10309211', cname: '金城武', phone: '0937364123', restName: '台灣古早味', mealName: '雞排飯',time: '12:45' , quantity 3, buildName: 'T2', roomName:'101', totalprice: 80
+  order.create sid: 'M10309209', cname: '安心亞', phone: '0937364902', restName: '豪享來', mealName: '牛肉湯麵',time: '12:45' , quantity 3, buildName: 'T2', roomName:'101', totalprice: 50
+  order.create sid: 'M10309210', cname: '范冰冰', phone: '0937543902', restName: '韓風小舖', mealName: '韓式拌飯',time: '12:45' , quantity 1, buildName: 'MA', roomName:'101', totalprice: 85
+  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '豪享來', mealName: '紅油炒手',time: '12:30' , quantity 2, buildName: 'T2', roomName:'101', totalprice: 40
+  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '吉之賀', mealName: '親子丼',time: '12:30' , quantity 1, buildName: 'IB', roomName:'101', totalprice: 70
+  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '七辣滷味', mealName: 'A套餐',time: '12:30' , quantity 1, buildName: 'T2', roomName:'101', totalprice: 50
+  order.create sid: 'M10309205', cname: '陳致宇', phone: '0937364902', restName: '安娜廚房', mealName: '蒜香義大利麵',time: '12:30' , quantity 1, buildName: 'T2', roomName:'101', totalprice: 55
+  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '吉之賀', mealName: '親子丼',time: '12:30' , quantity 2, buildName: 'IB', roomName:'101', totalprice: 70
+  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '四海遊龍', mealName: '酸辣麵',time: '12:30' , quantity 1, buildName: 'IB', roomName:'101', totalprice: 50
+  order.create sid: 'M10309207', cname: '潔西卡艾芭', phone: '0937332902', restName: '七辣滷味', mealName: 'B套餐',time: '12:30' , quantity 4, buildName: 'IB', roomName:'101', totalprice: 60
 
 
 
