@@ -1,3 +1,8 @@
 module.exports =
+  account: require './accountModel'
+  build: require './buildModel'
+  dman: require './dmanModel'
+  menu: require './menuModel'
+  order: require './orderModel'
   restaurant: require './restaurantModel'
-  meal: require './menuModel'
+  room: require './roomModel'

@@ -19,6 +19,7 @@ Response = require '../../models/responseModel'
 router.route '/'
   .get (req, res, next) ->
     cb = (err, data) ->
+      console.log '22.....', err
       if err
         next('FAILURE')
       else
@@ -29,17 +30,21 @@ router.route '/'
         res.body = response.getBody()
         next()
     restaurantService.getList cb
+
   , routerHelper.handleSuccess
   , routerHelper.handleError
 
   #validator.checkReqParams ['method']
   .post (req, res, next) ->
-
+    console.log '****rest', Object.keys(req.body)
     cb = (err) ->
       if err
+        console.log '42.....', err
         next('FAILURE')
       else
-        res.redirect req.originalUrl
+        res.redirect('/admin/restaurants')
+        # response = new Response 'SUCCESS'
+        # res.body = response.getBody()
         # next()
 
     if !req.body.method then cb 'err'
@@ -66,11 +71,15 @@ router.route '/:rid'
 
   # validator.checkReqParams ['method']
   .post (req, res, next) ->
+    console.log '****menu', req.body
     cb = (err) ->
       if err
+        console.log '76.....', err
         next('FAILURE')
       else
-        res.redirect req.originalUrl
+        res.redirect('/admin/restaurants')
+        # response = new Response 'SUCCESS'
+        # res.body = response.getBody()
         # next()
 
     if !req.body.method then cb 'err'

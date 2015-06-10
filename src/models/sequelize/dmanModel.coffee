@@ -15,7 +15,8 @@ init = (sequelize) ->
     phone:
       type: Sequelize.STRING
       allowNull: no
-  , indexes: [
+  ,
+    indexes: [
       fields: ['cname']
     ]
 
@@ -30,7 +31,33 @@ create = (dman, cb) ->
     cb err
 
 find = (id, cb) ->
-  model.find
+  model.findById id
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+findAll = (cb) ->
+  model.findAll()
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+update = (dman, cb) ->
+  model.update
+    cname: dman.cname
+    phone: dman.phone
+  ,
+    where:
+      cname: dman.cname
+  .then (data) ->
+    cb null, data
+  ,(err) ->
+    cb err
+
+destroy = (id, cb) ->
+  model.destroy
     where:
       id: id
   .then (data) ->
@@ -38,31 +65,4 @@ find = (id, cb) ->
   , (err) ->
     cb err
 
-findAll = (cb) ->
-  model.find
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-update =(dman,cb) ->
-  model.update
-    cname: dman.cname
-    phone: dman.phone
-    where:
-      cname: meal.cname
-  .then (data) ->
-    cb null, data
-  ,(err) ->
-    cb err
-
-destory =(id,cb) ->
-  model.destory
-    where:
-        id: id
-  .then (data) ->
-    cb null, data
-  , (err) ->
-    cb err
-
-module.exports = { init, create, find, findAll , update , destory}
+module.exports = { init, create, find, findAll, update, destroy }

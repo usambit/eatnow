@@ -22,7 +22,7 @@ router.get '/restaurants', (req, res) ->
     if err
       next err
     else
-      res.render 'adminRest',
+      return res.render 'adminRest',
         data: data
 
   restService.getList cb

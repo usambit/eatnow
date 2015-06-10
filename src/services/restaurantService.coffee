@@ -32,9 +32,22 @@ getList = (cb) ->
     else
 
       if(rdata.length is 0)
-        cb()
+        cb null, []
 
       rtn = []
+      map = []
+      total = rdata.length
+      ij = 0
+      flagErr = false
+      loopCb = (err, rtn) ->
+        flagErr = if err then true
+        ij++
+        if ij is total
+          if flagErr
+            cb 'err'
+          else
+            cb null, rtn
+
       for rest, i in rdata
         rtn.push
           id: rest.id
@@ -42,17 +55,20 @@ getList = (cb) ->
           place: rest.place
           img: rest.img
           menu: []
+        map.push rest.id
 
-        _i = i
-        getMenuCb = (err, mdata) ->
+        getMenuCb = (err, mdata) =>
           if err
-            cb err
+            loopCb err
           else
-            rtn[_i].menu = for menu in mdata
-              id: menu.id
-              cname: menu.cname
-              price: menu.price
-            cb null, rtn
+            for menu in mdata
+              rr = map.indexOf(menu.restaurantId);
+              rtn[rr].menu.push
+                id: menu.id
+                cname: menu.cname
+                price: menu.price
+
+            loopCb null, rtn
 
         menuModel.findByRid rest.id, getMenuCb
 
@@ -125,7 +141,7 @@ delRest = (o, cb) ->
     else
       cb null
 
-  restModel.destory o.id, modelCb
+  restModel.destroy o.id, modelCb
 
 
 addMenu = (o, cb) ->
@@ -162,6 +178,6 @@ delMenu = (o, cb) ->
     else
       cb null
 
-  menuModel.destory o.id, modelCb
+  menuModel.destroy o.id, modelCb
 
 module.exports = { getList, getRest, addRest, saveRest, delRest, addMenu, saveMenu, delMenu }

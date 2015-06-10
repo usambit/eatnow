@@ -3,7 +3,7 @@ Sequelize = require 'sequelize'
 model = null
 
 init = (sequelize) ->
-  model = sequelize.define 'restaurants',
+  model = sequelize.define 'builds',
     id:
       primaryKey: yes
       type: Sequelize.UUID
@@ -12,25 +12,28 @@ init = (sequelize) ->
     cname:
       type: Sequelize.STRING
       allowNull: no
-    place:
+    start:
       type: Sequelize.STRING
-      allownull: no
-    img:
+      allowNull: no
+    end:
       type: Sequelize.STRING
-      allownull: no
+      allowNull: no
+    time:
+      type: Sequelize.INTEGER
+      allowNull: no
   ,
     indexes: [
       fields: ['cname']
     ]
 
-create = (restaurant, cb) ->
-  console.log '!!!~~~~~~~~~~~~~~~~~~~~~~'
+
+create = (build, cb) ->
   model.create
-    cname: restaurant.cname
-    place: restaurant.place
-    img: restaurant.img
+    cname: build.cname
+    start: build.start
+    end: build.end
+    time: build.time
   .then (data) ->
-    console.log '######', data.id
     cb null, data
   , (err) ->
     cb err
@@ -49,20 +52,21 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update = (id, restaurant, cb) ->
+update = (id, build, cb) ->
   model.update
-    cname: restaurant.cname
-    place: restaurant.place
-    img: restaurant.img
+    cname: build.cname
+    start: build.cname
+    end: build.end
+    time: build.time
   ,
     where:
       id: id
   .then (data) ->
     cb null, data
-  , (err) ->
+  ,(err) ->
     cb err
 
-destroy = (id, cb) ->
+destroy = (id) ->
   model.destroy
     where:
       id: id
@@ -70,5 +74,6 @@ destroy = (id, cb) ->
     cb null, data
   , (err) ->
     cb err
+
 
 module.exports = { init, create, find, findAll, update, destroy }

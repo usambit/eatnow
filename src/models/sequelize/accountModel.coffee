@@ -1,31 +1,32 @@
-Sequelize =  require 'sequlize'
+Sequelize = require 'sequelize'
 
 model = null
 
-init = (squlize) ->
+init = (sequelize) ->
   model = sequelize.define 'accounts',
-  id:
+    id:
       primaryKey: yes
       type: Sequelize.UUID
       defaultValue: Sequelize.UUIDV1
       allowNull: no
-  sid:
-      type: sequelize.STRING
+    sid:
+      type: Sequelize.STRING
       allownull:no
-  pw:
-      type: sequelize.STRING
+    pw:
+      type: Sequelize.STRING
       allownull:no
-  cname:
+    cname:
       type: Sequelize.STRING
       allowNull: no
-  phone:
-      type: sequelize.STRING
+    phone:
+      type: Sequelize.STRING
       allownull: no
-  email:
-    type: sequelize.STRING
-    allownull: no
-  , index: [
-      fields; ['sid']
+    email:
+      type: Sequelize.STRING
+      allownull: no
+  ,
+    indexes: [
+      fields: ['sid']
     ]
 
 create = (account, cb) ->
@@ -40,39 +41,43 @@ create = (account, cb) ->
   , (err) ->
     cb err
 
-find = (account, cb) ->
-  model.find
+find = (id, cb) ->
+  model.findById id
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
+findBySid = (sid, cb) ->
+  model.model.findAll
     where:
-      id: id
+      sid: sid
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
 findAll = (cb) ->
-  model.find
+  model.findAll()
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-update =(account,cb) ->
+update = (account, cb) ->
   model.update
     sid: account.sid
     pw: account.pw
     cname: account.cname
     phone: account.phone
     email: account.email
+  ,
     where:
-      sid: account.sid
-      pw: account.pw
-      cname: account.cname
-      phone: account.phone
-      email: account.email
+      id: id
   .then (data) ->
     cb null, data
   ,(err) ->
     cb err
 
 
-module.exports = { init, create, find, findAll , update}
+module.exports = { init, create, find, findBySid, findAll, update }

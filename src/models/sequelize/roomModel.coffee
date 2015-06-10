@@ -21,10 +21,11 @@ init = (sequelize) ->
     time:
       type: Sequelize.INTEGER
       allowNull: no
-    bulidName:
+    buildName:
       type: Sequelize.STRING
       allowNull: no
-  , indexes: [
+  ,
+    indexes: [
       fields: ['cname']
     ]
 
@@ -42,28 +43,27 @@ create = (room, cb) ->
     cb err
 
 find = (id, cb) ->
-  model.find
-    where:
-      id: id
+  model.findById id
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
 findAll = (cb) ->
-  model.find
+  model.findAll()
   .then (data) ->
     cb null, data
   , (err) ->
     cb err
 
-update =(room,cb) ->
+update = (room, cb) ->
   model.update
     cname: room.cname
     start: room.start
     end: room.end
     time: room.time
     bulidName: room.bulidName
+  ,
     where:
       cname: room.cname
   .then (data) ->
@@ -71,8 +71,8 @@ update =(room,cb) ->
   ,(err) ->
     cb err
 
-destory =(room) ->
-  model.destory
+destroy = (room) ->
+  model.destroy
     where:
       cname: room.cname
       cname: room.cname
@@ -85,4 +85,4 @@ destory =(room) ->
   , (err) ->
     cb err
 
-module.exports = { init, create, find, findAll , update , destory}
+module.exports = { init, create, find, findAll, update, destroy }

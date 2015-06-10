@@ -23,7 +23,6 @@ init = (sequelize) ->
       fields: ['cname']
     ]
 
-
 create = (meal, cb) ->
   model.create
     cname: meal.cname
@@ -69,8 +68,8 @@ update = (id, meal, cb) ->
   , (err) ->
     cb err
 
-destory = (id) ->
-  model.destory
+destroy = (id, cb) ->
+  model.destroy
     where:
       id: id
   .then (data) ->
@@ -79,4 +78,4 @@ destory = (id) ->
     cb err
 
 
-module.exports = { init, create, find, findByRid, findAll , update , destory}
+module.exports = { init, create, find, findByRid, findAll , update , destroy}

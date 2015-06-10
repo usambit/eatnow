@@ -5,13 +5,13 @@ extends layout
 block content
   header.eatnow
     h1(style="display: inline-block;") EatNow - 餐廳
-    h3#btnAddRest.headerIcon.glyphicon.glyphicon-plus
+    h3.btnAddRest.headerIcon.glyphicon.glyphicon-plus
   article.col-sm-10
     - for(var i = 0; i< data.length; i++) {
     section(data-cname=data[i].cname, data-id=data[i].id, data-img=data[i].img, data-place=data[i].place)
       h2(style="display: inline-block;")= data[i].cname
-      span#btnEditRest.headerIcon.glyphicon.glyphicon-pencil
-      span#btnRemoveRest.headerIcon.glyphicon.glyphicon-minus
+      span.btnEditRest.headerIcon.glyphicon.glyphicon-pencil
+      span.btnRemoveRest.headerIcon.glyphicon.glyphicon-minus
       table.table.table-bordered.table-hover
         thead
           tr
@@ -21,12 +21,12 @@ block content
         - for(var j = 0; j< data[i].menu.length; j++) {
           tr
             td(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)
-              span#btnEditMenu.headerIcon.glyphicon.glyphicon-pencil
-              span#btnRemoveMenu.headerIcon.glyphicon.glyphicon-minus
+              span.btnEditMenu.headerIcon.glyphicon.glyphicon-pencil
+              span.btnRemoveMenu.headerIcon.glyphicon.glyphicon-minus
             td= data[i].menu[j].cname
             td= data[i].menu[j].price
         - }
-      span#btnAddMenu.headerIcon.glyphicon.glyphicon-plus
+      span.btnAddMenu.headerIcon.glyphicon.glyphicon-plus
     - }
 
 
@@ -40,6 +40,7 @@ block content
     form.form-horizontal(role="form", method="post", action="")
       input(type="hidden" name="method" value="")
       input(type="hidden" name="restaurantId" value="")
+      input(type="hidden" name="id" value="")
       div.form-group
         label.col-sm-3.control-label(for="inputMName") name
         div.col-sm-9
@@ -80,18 +81,52 @@ block content
           button.btn.btn-primary.btn-block submit
 
   script.
+    function postForm(frm, cb) {
+      var action = frm.attr('action');
+      var method = frm.attr('method');
+      var callback = cb || $.noop;
+      console.log(frm, frm.serialize())
+      $.ajax({
+        url: action,
+        type: method,
+        data: frm.serialize(),
+        dataType: 'json',
+        success: function (res) {
+          console.log(res);
+          callback(res);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr, ajaxOptions, thrownError);
+          var feedback = {};
+          if(xhr && xhr.responseText){
+            var json = null;
+            try {
+              json = JSON.parse(xhr.responseText);
+              for(var i in json){
+                feedback[i] = json[i];
+              }
+            } catch(e) {
+
+            }
+          }
+          callback(feedback);
+        }
+      });
+    }
+
+  script.
     $("#createMenuForm").hide();
     $("#createRestForm").hide();
 
-    $('#btnAddRest').click(function(){
+    $('.btnAddRest').click(function(){
       $("#createRestForm").find("form input").val('');
       $("#createRestForm").find("form> input[name='method']").val('create');
       $("#createRestForm").show();
     });
-    $('#btnAddMenu').click(function(){
+    $('.btnAddMenu').click(function(){
       var rid = $($(this).parent()).data('id');
       var path = '/resources/restaurants/' + rid;
-      $("#createRestForm").find("form input").val('');
+      $("#createMenuForm").find("form input").val('');
       $("#createMenuForm").find("form").attr('action', path);
       $("#createMenuForm").find("form> input[name='method']").val('create');
       $("#createMenuForm").find("form input[name='restaurantId']").val(rid);
@@ -106,7 +141,7 @@ block content
     });
 
 
-    $('#btnEditRest').click(function(){
+    $('.btnEditRest').click(function(){
       var id = $($(this).parent()).data('id');
       var cname = $($(this).parent()).data('cname');
       var img = $($(this).parent()).data('img');
@@ -119,7 +154,7 @@ block content
       $("#createRestForm").find("form input[name='place']").val(place);
       $("#createRestForm").show();
     });
-    $('#btnEditMenu').click(function(){
+    $('.btnEditMenu').click(function(){
       var id = $($(this).parent()).data('id');
       var cname = $($(this).parent()).data('cname');
       var price = $($(this).parent()).data('price');
@@ -134,18 +169,40 @@ block content
       $("#createMenuForm").show();
     });
 
-    $('#btnRemoveRest').click(function() {
+    $('.btnRemoveRest').click(function() {
       var id = $($(this).parent()).data('id');
       $("#createRestForm").find("form> input[name='method']").val('delete');
+      $("#createRestForm").find("form input[name='id']").val(id);
       $("#createRestForm").find('form').submit();
     });
 
-    $('#btnRemoveMenu').click(function() {
+    $('.btnRemoveMenu').click(function() {
       var id = $($(this).parent()).data('id');
       var rid = $($(this).parent()).data('rid');
       var path = '/resources/restaurants/' + rid;
       $("#createMenuForm").find("form").attr('action', path);
       $("#createMenuForm").find("form> input[name='method']").val('delete');
+      $("#createMenuForm").find("form input[name='restaurantId']").val(rid);
+      $("#createMenuForm").find("form input[name='id']").val(id);
       $("#createMenuForm").find('form').submit();
     });
 
+
+
+    //- $('#createRestForm > form').on('submit', function (event) {
+    //-   event.preventDefault();
+    //-   var frm = $(this);
+    //-   var cb = function(res) {
+    //-     //location.reload();
+    //-   };
+    //-   postForm(frm, cb);
+    //- });
+
+    //- $('#createMenuForm > form').on('submit', function (event) {
+    //-   event.preventDefault();
+    //-   var frm = $(this);
+    //-   var cb = function(res) {
+    //-     //location.reload();
+    //-   };
+    //-   postForm(frm, cb);
+    //- });
