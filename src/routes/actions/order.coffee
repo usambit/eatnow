@@ -12,7 +12,6 @@ orderModel = require '../../models/sequelize/orderModel'
 
 router.route '/'
   .post (req, res) ->
-    console.log '!!!!!', req.body
     for order in req.body.orders
       orderModel.create order, ->
 

@@ -68,6 +68,16 @@ find = (id, cb) ->
   , (err) ->
     cb err
 
+findByTime = (time, cb) ->
+  model.findAll
+    where:
+      time: time
+    order: [['buildName', 'ASC']]
+  .then (data) ->
+    cb null, data
+  , (err) ->
+    cb err
+
 findAll = (cb) ->
   model.findAll()
   .then (data) ->
@@ -96,4 +106,4 @@ update = (order, id, cb) ->
     cb err
 
 
-module.exports = { init, create, find, findAll, update }
+module.exports = { init, create, find, findByTime, findAll, update }

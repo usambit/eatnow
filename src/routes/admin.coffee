@@ -7,7 +7,10 @@ ui
 express = require 'express'
 router  = express.Router()
 restService = require '../services/restaurantService'
+orderModel = require '../models/sequelize/orderModel'
 
+tolm = 10
+tolb = 2
 # restaurants and assign button
 router.get '/', (req, res) ->
   res.render 'adminRoot'
@@ -56,8 +59,110 @@ router.get '/restaurants', (req, res) ->
 # router.get '/assign', (req, res) ->
   # res.render 'adminAssign'
 
+
+queryDb = (time, cb) ->
+  orderModel.findByTime time, (err, data) ->
+    dmans: []
+
+    dMi = 0
+    dMstartI = 0
+    dMendI = 0
+    dMq = 0
+    prev = null
+    curr = null
+
+    ords = []
+    ord = []
+    ordQ = 0
+    dlen = data.length
+    for d, i in data
+      prev = data[i-1] or null
+      curr = d
+      if !prev or (curr.buildName  == prev.buildName and curr.roomName == prev.roomName)
+        ord.push curr
+        ordQ = ordQ + curr.quantity
+      else
+        ords.push
+          name: prev.buildName + ", " + prev.roomName
+          menu: ord,
+          price: prev.totalprice
+          account: prev.cname
+          q: ordQ
+        ord = []
+        ordQ = 0
+
+      if i == (dlen-1)
+        ords.push
+          name: curr.buildName + ", " + curr.roomName
+          menu: ord,
+          price: curr.totalprice
+          account: curr.cname
+          q: ordQ + curr.quantity
+        ord = []
+        ordQ = 0
+
+    console.log ords
+
+    dmans = []
+    rooms = []
+    for oo, j in ords
+      console.log dMq, tolm, oo.q
+      if ((dMq + oo.q) < tolm)
+        rooms.push oo
+        dMq = dMq + oo.q
+        #console.log  oo
+      else
+        console.log('...', j)
+        dmans.push
+          rooms: rooms
+          name: j
+        rooms = []
+        rooms.push oo
+        dMq = oo.q
+
+      rlen = ords.length
+      if j == (rlen-1)
+        console.log('@@', j)
+        dmans.push
+          rooms: rooms
+          name: j+1
+        rooms = []
+        dMq = 0
+    console.log dmans
+
+    cb
+      time: time
+      dmans: dmans
+
 # report
 router.get '/assign/report', (req, res) ->
+  i = 0
+  rtn = []
+  rtn[0] = null
+  rtn[1] = null
+  rtn[2] = null
+  timemap = ['12:30', '12:45', '13:00']
+  loopCb = (idx, data) ->
+    i++
+    rtn[idx] = data
+    if i==3
+      res.render 'adminReport',
+        data: rtn
+
+  queryDb '12:30', (data) ->
+    loopCb(0, data)
+
+  queryDb '12:45', (data)->
+    loopCb(1, data)
+
+  queryDb '13:00', (data)->
+    loopCb(2, data)
+
+
+
+
+
+###
   res.render 'adminReport',
     data: [
       time: '12:30'
@@ -163,5 +268,5 @@ router.get '/assign/report', (req, res) ->
         ]
       ]
     ]
-
+###
 module.exports = router;
