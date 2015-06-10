@@ -1,4 +1,47 @@
 extends layout
 
+-var data = #{data}
+
 block content
-  div AAA
+  header.eatnow
+    h1(style="display: inline-block;") EatNow - Rest List
+  article.col-sm-12
+    - for(var i = 0; i< data.length; i++) {
+    section.restinfo(data-cname=data[i].cname, data-id=data[i].id, data-img=data[i].img, data-place=data[i].place)
+      h2(style="display: inline-block;")= data[i].cname + '@' + data[i].place
+      div.restimg
+      div.restmenu
+        - for(var j = 0; j< data[i].menu.length; j++) {
+        div.col-sm-12(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)
+          span.col-sm-5= data[i].menu[j].cname
+          span.col-sm-4= "$ " + data[i].menu[j].price
+          input.col-sm-2.inputQ(type="number" name="q" value="0")
+        - }
+    - }
+    hr
+    div.car.col-sm-10
+      //- div.form-group
+      div.col-sm-10
+        label.col-sm-2 total
+        label#lblPrice $2000
+      div.col-sm-10
+        label.col-sm-2 time
+        select.col-sm-4
+          option 12:30
+          option 12:45
+          option 13:00
+      div.col-sm-10
+        label.col-sm-2.control-label(for="inputName") username
+        div.col-sm-4
+          input#inputName.form-control(type="text", name="name", placeholder="username")
+      div.col-sm-10
+        label.col-sm-2.control-label(for="inputBuild") build
+        div.col-sm-4
+          input#inputBuild.form-control(type="text", name="build", placeholder="build")
+      div.col-sm-10
+        label.col-sm-2.control-label(for="inputRoom") room
+        div.col-sm-4
+          input#inputRoom.form-control(type="text", name="room", placeholder="room")
+
+
+      button.btn.btn-primary.btn-block order

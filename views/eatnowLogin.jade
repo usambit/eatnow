@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  section#adminLoginPanel.col-sm-12
+    header EatNow
+
+    form.form-horizontal(role="form", method="post", action="/accounts/login")
+      input(type="hidden" name="type" value="default")
+      div.form-group
+        label.col-sm-3.control-label(for="inputId") 帳號
+        div.col-sm-9
+          input#inputId.form-control(type="email", name="sid", placeholder="Email")
+      div.form-group
+        label.col-sm-3.control-label(for="inputPw") 密碼
+        div.col-sm-9
+          input#inputPw.form-control(type="password", name="password", placeholder="Password")
+      div.form-group
+        div.col-sm-offset-1.col-sm-11
+          button.btn.btn-primary.btn-block 登入

@@ -6,18 +6,28 @@ ui
 
 express = require 'express'
 router  = express.Router()
+restService = require '../services/restaurantService'
+
 
 # homepage order/ login/ logout
 router.get '/', (req, res) ->
-  res.render 'eatnowRoot'
+  cb = (err, data) ->
+    if err
+      next err
+    else
+      res.render 'eatnowRest',
+        data: data
 
-# list restaurant name and pic
-router.get '/restaurants', (req, res) ->
-    res.render 'eatnowRest'
+  restService.getList cb
+
+# login
+router.get '/login', (req, res) ->
+  res.render 'eatnowLogin'
+
 
 # show restaurant menu
-router.get '/restaurants/:rid', (req, res) ->
-    res.render 'eatnowMenu'
+# router.get '/restaurants/:rid', (req, res) ->
+#     res.render 'eatnowMenu'
 
 # show order car, object menu, and submit
 router.get '/car', (req, res) ->
