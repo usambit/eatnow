@@ -9,7 +9,8 @@ block content
   article.col-sm-10
     - for(var i = 0; i< data.length; i++) {
     section(data-cname=data[i].cname, data-id=data[i].id, data-img=data[i].img, data-place=data[i].place)
-      h2(style="display: inline-block;")= data[i].cname
+      div.restimg.small(style="background-image: url(#{data[i].img});background-size: contain;")
+      h2(style="display: inline-block;")= data[i].cname + " @ " + data[i].place
       span.btnEditRest.headerIcon.glyphicon.glyphicon-pencil
       span.btnRemoveRest.headerIcon.glyphicon.glyphicon-minus
       table.table.table-bordered.table-hover
@@ -23,10 +24,13 @@ block content
             td(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)
               span.btnEditMenu.headerIcon.glyphicon.glyphicon-pencil
               span.btnRemoveMenu.headerIcon.glyphicon.glyphicon-minus
-            td= data[i].menu[j].cname
-            td= data[i].menu[j].price
+            td.col-sm-5= data[i].menu[j].cname
+            td.col-sm-5= data[i].menu[j].price
         - }
       span.btnAddMenu.headerIcon.glyphicon.glyphicon-plus
+      hr
+      br
+      br
     - }
 
 

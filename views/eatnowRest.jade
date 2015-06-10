@@ -9,7 +9,7 @@ block content
     - for(var i = 0; i< data.length; i++) {
     section.restinfo(data-cname=data[i].cname, data-id=data[i].id, data-img=data[i].img, data-place=data[i].place)
       h2(style="display: inline-block;")= data[i].cname + '@' + data[i].place
-      div.restimg
+      div.restimg(style="background-image: url(#{data[i].img});background-size: contain;")
       div.restmenu
         - for(var j = 0; j< data[i].menu.length; j++) {
         div.col-sm-12(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)

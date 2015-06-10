@@ -9,15 +9,35 @@ block content
     - for(var i = 0; i< data.length; i++) {
     section
       h2= data[i].time
-      table.table.table-bordered.table-hover
-        thead
-          tr
-            th 送餐員
-            th 地點
-            th 餐點
-            th 數量
-            th 訂餐人
-            th 價格
+      - for(var j = 0; j< data[i].dmans.length; j++) {
+      div='送餐員: ' + data[i].dmans[j].name
+        - for(var k = 0; k< data[i].dmans[j].rooms.length; k++) {
+        div='訂餐人: ' + data[i].dmans[j].rooms[k].account
+        div='地點: ' + data[i].dmans[j].rooms[k].name
+        div='價格: $' + data[i].dmans[j].rooms[k].price
+        table.table.table-bordered.table-hover
+          thead
+            tr
+              th 餐點
+              th 數量
+          - for(var l = 0; l< data[i].dmans[j].rooms[k].menu.length; l++) {
+            tr
+              td.col-sm-5= data[i].dmans[j].rooms[k].menu[l].mealName
+              td.col-sm-5= data[i].dmans[j].rooms[k].menu[l].quantity
+          - }
+        - }
+      hr
+      - }
+
+      //- table.table.table-bordered.table-hover
+      //-   thead
+      //-     tr
+      //-       th 送餐員
+      //-       th 地點
+      //-       th 餐點
+      //-       th 數量
+      //-       th 訂餐人
+      //-       th 價格
         - for(var j = 0; j< data[i].dmans.length; j++) {
         - for(var k = 0; k< data[i].dmans[j].rooms.length; k++) {
         - for(var l = 0; l< data[i].dmans[j].rooms[k].menu.length; l++) {

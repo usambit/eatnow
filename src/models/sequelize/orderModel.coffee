@@ -72,7 +72,7 @@ findByTime = (time, cb) ->
   model.findAll
     where:
       time: time
-    order: [['buildName', 'ASC']]
+    order: [['buildName', 'ASC'], ['roomName', 'ASC']]
   .then (data) ->
     cb null, data
   , (err) ->
