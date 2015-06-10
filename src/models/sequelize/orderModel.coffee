@@ -11,7 +11,7 @@ init = (sequelize) ->
       allowNull: no
     sid:
       type: Sequelize.STRING
-      allownull: no
+      allowNull: no
     cname:
       type: Sequelize.STRING
       allowNull: no
@@ -24,12 +24,21 @@ init = (sequelize) ->
     mealName:
       type: Sequelize.STRING
       allowNull: no
+    buildName:
+      type: Sequelize.STRING
+      allowNull: no
+    roomName:
+      type: Sequelize.STRING
+      allowNull: no
+    quantity:
+      type: Sequelize.INTEGER
+      allowNull: no
     time:
       type: Sequelize.STRING
-      allownull: no
+      allowNull: no
     totalprice:
       type: Sequelize.INTEGER
-      allownull: no
+      allowNull: no
   ,
     indexes: [
       fields: ['cname']
@@ -42,7 +51,11 @@ create = (order, cb) ->
     phone: order.phone
     restName: order.restName
     mealName: order.mealName
-    totalprice: order.totalprice
+    totalprice: order.totalprice,
+    buildName: order.buildName,
+    roomName: order.roomName,
+    quantity: order.quantity,
+    time: order.time
   .then (data) ->
     cb null, data
   , (err) ->
@@ -70,6 +83,10 @@ update = (order, id, cb) ->
     restName: order.restName
     mealName: order.mealName
     totalprice: order.totalprice
+    buildName: order.buildName,
+    roomName: order.roomName,
+    quantity: order.quantity,
+    time: order.time
   ,
     where:
       id: id

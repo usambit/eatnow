@@ -14,8 +14,8 @@ block content
         - for(var j = 0; j< data[i].menu.length; j++) {
         div.col-sm-12(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)
           span.col-sm-5= data[i].menu[j].cname
-          span.col-sm-4= "$ " + data[i].menu[j].price
-          input.col-sm-2.inputQ(type="number" name="q" value="0")
+          span.col-sm-3= "$ " + data[i].menu[j].price
+          input.col-sm-3.inputQ(type="number" name="q" value="0")
         - }
     - }
     hr
@@ -23,17 +23,14 @@ block content
       //- div.form-group
       div.col-sm-10
         label.col-sm-2 total
-        label#lblPrice $2000
+        label $
+        label#lblPrice 0
       div.col-sm-10
         label.col-sm-2 time
-        select.col-sm-4
+        select#inputTime.col-sm-4(name=time)
           option 12:30
           option 12:45
           option 13:00
-      div.col-sm-10
-        label.col-sm-2.control-label(for="inputName") username
-        div.col-sm-4
-          input#inputName.form-control(type="text", name="name", placeholder="username")
       div.col-sm-10
         label.col-sm-2.control-label(for="inputBuild") build
         div.col-sm-4
@@ -42,6 +39,133 @@ block content
         label.col-sm-2.control-label(for="inputRoom") room
         div.col-sm-4
           input#inputRoom.form-control(type="text", name="room", placeholder="room")
+      div.col-sm-10
+        label.col-sm-2.control-label(for="inputPhone") phone
+        div.col-sm-4
+          input#inputPhone.form-control(type="text", name="phone", placeholder="phone")
+
+      button#btnOrder.btn.btn-primary.btn-block order
 
 
-      button.btn.btn-primary.btn-block order
+  script.
+    function postForm(frm, cb) {
+      var action = frm.attr('action');
+      var method = frm.attr('method');
+      var callback = cb || $.noop;
+      console.log(frm, frm.serialize())
+      $.ajax({
+        url: action,
+        type: method,
+        data: frm.serialize(),
+        dataType: 'json',
+        success: function (res) {
+          console.log(res);
+          callback(res);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr, ajaxOptions, thrownError);
+          var feedback = {};
+          if(xhr && xhr.responseText){
+            var json = null;
+            try {
+              json = JSON.parse(xhr.responseText);
+              for(var i in json){
+                feedback[i] = json[i];
+              }
+            } catch(e) {
+
+            }
+          }
+          callback(feedback);
+        }
+      });
+    }
+
+
+  script.
+    $("input[type=number]").bind('input', function(){
+      tp = 0;
+      var restlens = $('.restinfo').length;
+      for(var i=0; i< restlens; i++) {
+        var restElm = $('.restinfo')[i];
+
+        var rmLens = $(restElm).find('.inputQ').length;
+        for(var j=0; j< rmLens; j++) {
+          var p = $($(restElm).find('.inputQ')[j]).parent().data('price');
+          var t = $($(restElm).find('.inputQ')[j]).val();
+          tp = tp + p * t;
+        }
+      }
+      $('#lblPrice').text(tp)
+    });
+
+    $('#btnOrder').click(function() {
+      var restlens = $('.restinfo').length;
+      var sid = 'M10309205';
+      var cname = '陳致宇';
+      var phone = $('#inputPhone').val()
+      var time = $('#inputTime').val()
+      var total = $('#lblPrice').text()
+      var buildName = $('#inputBuild').val()
+      var roomName = $('#inputRoom').val()
+      var data = [];
+
+      for(var i=0; i< restlens; i++) {
+        var restElm = $('.restinfo')[i];
+        var rmLens = $(restElm).find('.inputQ').length;
+        for(var j=0; j< rmLens; j++) {
+          if ($($(restElm).find('.inputQ')[j]).val() != 0) {
+            d = {
+              sid: sid,
+              cname: cname,
+              phone: phone,
+              restName: $(restElm).data('cname'),
+              mealName: $($(restElm).find('.inputQ')[j]).parent().data('cname'),
+              buildName: buildName,
+              roomName: roomName,
+              quantity: $($(restElm).find('.inputQ')[j]).val(),
+              time: time,
+              totalprice: total
+            }
+            console.log(d)
+            data.push(d)
+          }
+        }
+      }
+
+      if (data.length == 0)
+        return
+
+
+      $.ajax({
+        url: '/actions/order',
+        type: 'post',
+        data: {
+          orders: data
+        },
+        dataType: 'json',
+        success: function (res) {
+          console.log(res);
+          alert('購買成功!')
+          ///callback(res);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr, ajaxOptions, thrownError);
+          var feedback = {};
+          if(xhr && xhr.responseText){
+            var json = null;
+            try {
+              json = JSON.parse(xhr.responseText);
+              for(var i in json){
+                feedback[i] = json[i];
+              }
+            } catch(e) {
+
+            }
+          }
+          //callback(feedback);
+        }
+      });
+    });
+
+
