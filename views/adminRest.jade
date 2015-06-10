@@ -65,15 +65,15 @@ block content
       input(type="hidden" name="method" value="")
       input(type="hidden" name="id" value="")
       div.form-group
-        label.col-sm-3.control-label(for="inputName") name
+        label.col-sm-3.control-label(for="inputName") 名稱
         div.col-sm-9
           input#inputName.form-control(type="text", name="cname", placeholder="name")
       div.form-group
-        label.col-sm-3.control-label(for="inputImg") img
+        label.col-sm-3.control-label(for="inputImg") 圖片
         div.col-sm-9
-          input#inputImg.form-control(type="text", name="img", placeholder="image path")
+          input#inputImg.form-control(type="img", src="sub.jpg", alt="submit", name="img", placeholder="image path")
       div.form-group
-        label.col-sm-3.control-label(for="inputPlace") place
+        label.col-sm-3.control-label(for="inputPlace") 地點
         div.col-sm-9
           input#inputPlace.form-control(type="text", name="place", placeholder="place")
       div.form-group
