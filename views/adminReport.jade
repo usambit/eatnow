@@ -4,7 +4,7 @@ extends layout
 
 block content
   header.eatnow
-    h1 EatNow - Report
+    h1 EatNow - 分派清單
   article.col-sm-10
     - for(var i = 0; i< data.length; i++) {
     section
@@ -12,12 +12,12 @@ block content
       table.table.table-bordered.table-hover
         thead
           tr
-            th dmans
-            th place
-            th menu
-            th q
-            th account
-            th price
+            th 送餐員
+            th 地點
+            th 餐點
+            th 教室
+            th 訂餐員
+            th 價格
         - for(var j = 0; j< data[i].dmans.length; j++) {
         - for(var k = 0; k< data[i].dmans[j].rooms.length; k++) {
         - for(var l = 0; l< data[i].dmans[j].rooms[k].menu.length; l++) {

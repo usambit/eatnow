@@ -4,7 +4,7 @@ extends layout
 
 block content
   header.eatnow
-    h1(style="display: inline-block;") EatNow - Rest
+    h1(style="display: inline-block;") EatNow - 餐廳
     h3#btnAddRest.headerIcon.glyphicon.glyphicon-plus
   article.col-sm-10
     - for(var i = 0; i< data.length; i++) {
@@ -16,8 +16,8 @@ block content
         thead
           tr
             th
-            th name
-            th price
+            th 餐點名稱
+            th 價格
         - for(var j = 0; j< data[i].menu.length; j++) {
           tr
             td(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)

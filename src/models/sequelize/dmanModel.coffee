@@ -56,11 +56,10 @@ update =(dman,cb) ->
   ,(err) ->
     cb err
 
-destory =(dman) ->
+destory =(id,cb) ->
   model.destory
     where:
-      cname: dman.cname
-      phone: dman.phone
+        id: id
   .then (data) ->
     cb null, data
   , (err) ->

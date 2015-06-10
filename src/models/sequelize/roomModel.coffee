@@ -35,7 +35,7 @@ create = (room, cb) ->
     start: room.start
     end: room.end
     time: room.time
-    restaurant.cname: room.bulidName
+    bulidName: room.bulidName
   .then (data) ->
     cb null, data
   , (err) ->
@@ -63,7 +63,7 @@ update =(room,cb) ->
     start: room.start
     end: room.end
     time: room.time
-    restaurant.cname: room.bulidName
+    bulidName: room.bulidName
     where:
       cname: room.cname
   .then (data) ->

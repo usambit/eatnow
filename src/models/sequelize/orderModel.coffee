@@ -33,11 +33,11 @@ init = (sequelize) ->
 
 create = (order, cb) ->
   model.create
-    account.sid: order.sid
-    account.cname: order.cname
-    account.phone: order.phone
-    restaurant.cname: order.restName
-    meal.cname: order.mealName
+    sid: order.sid
+    cname: order.cname
+    phone: order.phone
+    cname: order.restName
+    cname: order.mealName
     totalprice: totalprice
   .then (data) ->
     cb null, data
@@ -60,7 +60,7 @@ findAll = (cb) ->
   , (err) ->
     cb err
 
-update =(order,cb) ->
+update =(order, id, cb) ->
   model.update
     sid: order.sid
     cname: order.cname
@@ -68,13 +68,9 @@ update =(order,cb) ->
     restName: order.restName
     mealName: order.mealName
     totalprice: order.totalprice
+  ,
     where:
-    sid: order.sid
-    cname: order.cname
-    price: order.price
-    restName: order.restName
-    mealName: order.mealName
-    totalprice: order.totalprice
+      id: id
   .then (data) ->
     cb null, data
   ,(err) ->
