@@ -15,32 +15,32 @@ block content
         div.col-sm-12(data-cname=data[i].menu[j].cname, data-id=data[i].menu[j].id, data-price=data[i].menu[j].price, data-rid=data[i].id)
           span.col-sm-5= data[i].menu[j].cname
           span.col-sm-3= "$ " + data[i].menu[j].price
-          input.col-sm-3.inputQ(type="number" name="q" value="0")
+          input.col-sm-3.inputQ(type="number" name="q" value="0" min="0" max="10")
         - }
     - }
     hr
     div.car.col-sm-10
       //- div.form-group
       div.col-sm-10
-        label.col-sm-2 total
+        label.col-sm-2 總額
         label $
         label#lblPrice 0
       div.col-sm-10
-        label.col-sm-2 time
+        label.col-sm-2 時間
         select#inputTime.col-sm-4(name=time)
           option 12:30
           option 12:45
           option 13:00
       div.col-sm-10
-        label.col-sm-2.control-label(for="inputBuild") build
+        label.col-sm-2.control-label(for="inputBuild") 建築
         div.col-sm-4
           input#inputBuild.form-control(type="text", name="build", placeholder="build")
       div.col-sm-10
-        label.col-sm-2.control-label(for="inputRoom") room
+        label.col-sm-2.control-label(for="inputRoom") 教室
         div.col-sm-4
           input#inputRoom.form-control(type="text", name="room", placeholder="room")
       div.col-sm-10
-        label.col-sm-2.control-label(for="inputPhone") phone
+        label.col-sm-2.control-label(for="inputPhone") 電話號碼
         div.col-sm-4
           input#inputPhone.form-control(type="text", name="phone", placeholder="phone")
 
@@ -93,9 +93,12 @@ block content
         for(var j=0; j< rmLens; j++) {
           var p = $($(restElm).find('.inputQ')[j]).parent().data('price');
           var t = $($(restElm).find('.inputQ')[j]).val();
-          tp = tp + p * t;
+          tp = tp + p * t ;
         }
       }
+          a = Math.floor( tp / 100) * 15;
+          if(a==0) a = 15;
+          tp = tp + a;
       $('#lblPrice').text(tp)
     });
 
