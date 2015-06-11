@@ -3,6 +3,7 @@ path         = require 'path'
 favicon      = require 'serve-favicon'
 cookieParser = require 'cookie-parser'
 bodyParser   = require 'body-parser'
+session = require('express-session')
 
 routes = require './routes/index'
 
@@ -16,8 +17,10 @@ app.set 'view engine', 'jade'
 #app.use favicon __dirname + '/public/favicon.ico'
 app.use bodyParser.json()
 app.use bodyParser.urlencoded extended: true
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 app.use cookieParser()
 app.use routes
+
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

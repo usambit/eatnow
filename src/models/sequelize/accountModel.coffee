@@ -49,7 +49,7 @@ find = (id, cb) ->
     cb err
 
 findBySid = (sid, cb) ->
-  model.model.findAll
+  model.findAll
     where:
       sid: sid
   .then (data) ->

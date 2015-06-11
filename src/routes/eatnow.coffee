@@ -7,10 +7,17 @@ ui
 express = require 'express'
 router  = express.Router()
 restService = require '../services/restaurantService'
+ar = require './accounts/login'
 
+tt  = (req, res, next)->
+  req.type = 'de'
+  next()
 
 # homepage order/ login/ logout
-router.get '/', (req, res) ->
+router.get '/',  ar.check,(req, res) ->
+  #req.session.isLogin = true
+  #console.log req.session.isLogin
+
   cb = (err, data) ->
     if err
       next err
@@ -30,7 +37,7 @@ router.get '/login', (req, res) ->
 #     res.render 'eatnowMenu'
 
 # show order car, object menu, and submit
-router.get '/car', (req, res) ->
+router.get '/car', ar.check,(req, res) ->
     res.render 'eatnowCar'
 
 

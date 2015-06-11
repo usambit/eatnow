@@ -10,6 +10,7 @@ router  = express.Router()
 
 router.route '/'
   .post (req, res) ->
-    res.status(200).json code: 200, message: 'success'
+    req.logOut()
+    #res.status(200).json code: 200, message: 'success'
 
 module.exports = router;

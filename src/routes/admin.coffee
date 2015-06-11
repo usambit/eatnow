@@ -8,19 +8,25 @@ express = require 'express'
 router  = express.Router()
 restService = require '../services/restaurantService'
 orderModel = require '../models/sequelize/orderModel'
+ar = require './accounts/login'
+
 
 tolm = 10
 tolb = 2
+tt  = (req, res, next)->
+  req.type = 'admin'
+  next()
+console.log tt, ar.check
 # restaurants and assign button
-router.get '/', (req, res) ->
+router.get '/', tt, ar.check,  (req, res) ->
   res.render 'adminRoot'
 
 # id/ password/ login
-router.get '/login', (req, res) ->
+router.get '/login',tt,  (req, res) ->
   res.render 'adminLogin'
 
 # list and menu
-router.get '/restaurants', (req, res) ->
+router.get '/restaurants',tt, ar.check,  (req, res) ->
   cb = (err, data) ->
     if err
       next err
@@ -135,17 +141,17 @@ queryDb = (time, cb) ->
       dmans: dmans
 
 # report
-router.get '/assign/report', (req, res) ->
+router.get '/assign/report', tt, ar.check, (req, res) ->
   i = 0
   rtn = []
   rtn[0] = null
   rtn[1] = null
-  rtn[2] = null
+  #rtn[2] = null
   timemap = ['12:30', '12:45', '13:00']
   loopCb = (idx, data) ->
     i++
     rtn[idx] = data
-    if i==3
+    if i==2
       res.render 'adminReport',
         data: rtn
 
@@ -154,10 +160,6 @@ router.get '/assign/report', (req, res) ->
 
   queryDb '12:45', (data)->
     loopCb(1, data)
-
-  queryDb '13:00', (data)->
-    loopCb(2, data)
-
 
 
 

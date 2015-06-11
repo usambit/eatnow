@@ -19,6 +19,8 @@ router.use '/:sid/orders', require './orders'
 
 router.route '/'
   .get (req, res) ->
+    req.session.a = true
+    console.log req.session.a
     res.status(200).json code: 200, message: 'success'
 
   .post (req, res) ->
